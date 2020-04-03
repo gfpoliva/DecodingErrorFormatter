@@ -5,6 +5,8 @@ This is just an extension for `DecodingError` that format its value. You can use
 decodingError.debug()
 ```
 
+There's also a playground example where you can play around your json and check its decoding.
+
 ## DecodeError cases
 
 ### .keyNotFound
