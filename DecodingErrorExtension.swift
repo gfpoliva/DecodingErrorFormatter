@@ -16,6 +16,7 @@ extension DecodingError {
     func debug() {
         switch self {
         case .keyNotFound(let codingKey, let context): handleKeyNotFound(codingKey: codingKey, context: context)
+        case .typeMismatch(_, let context): handleTypeMismatch(context: context)
         default: break
         }
     }
@@ -29,5 +30,14 @@ extension DecodingError {
             print("\("-".repeatFor(index + 1)) \(codingPath.stringValue)")
         }
         print("\("-".repeatFor(context.codingPath.count + 1)) \(codingKey.stringValue)")
+    }
+    
+    private func handleTypeMismatch(context: Context) {
+        print("** DECODING ERROR: TYPE MISMATCH IN HIERARCHY:**\n")
+
+        for (index, codingPath) in context.codingPath.enumerated() {
+            print("\("-".repeatFor(index + 1)) \(codingPath.stringValue)")
+        }
+        print("\("-".repeatFor(context.codingPath.count + 1)) \(context.debugDescription)")
     }
 }
