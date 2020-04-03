@@ -1,6 +1,6 @@
 import Foundation
 
-extension String {
+private extension String {
     func repeatFor(_ times: Int) -> String {
         var newString = self
 
@@ -18,12 +18,12 @@ extension DecodingError {
         case .keyNotFound(let codingKey, let context): handleKeyNotFound(codingKey: codingKey, context: context)
         case .typeMismatch(_, let context): handleTypeMismatch(context: context)
         case .valueNotFound(_, let context): handleValueNotFound(context: context)
-        default: break
+        case .dataCorrupted(let context): handleDataCorrupted(context: context)
+        default: defaultHandler()
         }
     }
 
     // MARK: - PRIVATE METHODS
-
     private func handleKeyNotFound(codingKey: CodingKey, context: Context) {
         print("** DECODING ERROR: KEY NOT FOUND IN HIERARCHY:**\n")
 
@@ -32,7 +32,7 @@ extension DecodingError {
         }
         print("\("-".repeatFor(context.codingPath.count + 1)) \(codingKey.stringValue)")
     }
-    
+
     private func handleTypeMismatch(context: Context) {
         print("** DECODING ERROR: TYPE MISMATCH IN HIERARCHY:**\n")
 
@@ -41,7 +41,7 @@ extension DecodingError {
         }
         print("\("-".repeatFor(context.codingPath.count + 1)) \(context.debugDescription)")
     }
-    
+
     private func handleValueNotFound(context: Context) {
         print("** DECODING ERROR: VALUE NOT FOUND IN HIERARCHY:**\n")
 
@@ -50,4 +50,16 @@ extension DecodingError {
         }
         print("\("-".repeatFor(context.codingPath.count + 1)) \(context.debugDescription)")
     }
+
+    private func handleDataCorrupted(context: Context) {
+        print("** DECODING ERROR: DATA CORRUPTED:**\n")
+
+        print(context.debugDescription)
+    }
+
+    private func defaultHandler() {
+        print("** DECODING ERROR:**\n")
+        print(self)
+    }
+
 }
