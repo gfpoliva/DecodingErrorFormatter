@@ -1,3 +1,5 @@
+import Foundation
+
 extension String {
     fileprivate func repeatFor(_ times: Int) -> String {
         var newString = self
